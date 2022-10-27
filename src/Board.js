@@ -2,7 +2,7 @@ const { uuid } = require("../utils/helpers")
 
 // TODO: Add functions to retrieve exact, row info for tile mapping
 class Board {
-    constructor(level) {
+    constructor() {
         this.tiles =  Array.from(Array(5), x => this._genRow(level)); // creates 5x5 table
         this.tilesState = Array.from(Array(5), x => Array(5).fill(0)); // 0 = un-flipped, 1 = flipped
         this.memoState = Array.from(Array(5), x => Array(5).fill(0));
@@ -10,7 +10,7 @@ class Board {
         this.board_id = uuid();
     }
 
-    _getWeightedNum(level) { // generate a number between 0 and 3 based off of weighted "percentages"
+    _getWeightedNum() { // generate a number between 0 and 3 based off of weighted "percentages"
         const weights = [
             { weight : [0,40], value : 0},
             { weight : [40,70], value : 1},
@@ -18,13 +18,11 @@ class Board {
             { weight : [90,100], value : 3}
         ];
         const randInt = Math.floor(Math.random() * (101 - 0) + 0);
-        const randModifier = Math.ceil(Math.random() * (level - 1), + 1);
-        let num = weights.find((elem) => randInt >= elem.weight[0] && randInt <= elem.weight[1]).value;
-        console.log(Math.ceil( num / randModifier ))
+        return weights.find((elem) => randInt >= elem.weight[0] && randInt <= elem.weight[1]).value;
     }
 
     _genRow(level) {
-        return Array.from(Array(5), x => this._getWeightedNum(level)) // gen random array of length 5, with weighted numbers
+        return Array.from(Array(5), x => this._getWeightedNum()) // gen random array of length 5, with weighted numbers
     }
 
     // _genRow() { // this generates a very hard gameboard
@@ -108,7 +106,7 @@ class Board {
     }
 }
 
-const x = new Board(4);
+// const x = new Board();
 // console.log(x.tiles)
 // console.log(x.getHighMults())
 // x.tilesState[0][0] = 1
