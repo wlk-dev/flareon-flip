@@ -5,6 +5,7 @@ const uuid = require("../utils/helpers")
 class Board {
     constructor() {
         this.tiles =  Array.from(Array(5), x => this._genRow()); // creates 5x5 table
+        this.tilesState = Array.from(Array(5), x => 0) // 0 = un-flipped, 1 = flipped
         this._bomb = 0;
         this.board_id = uuid();
     }
@@ -64,9 +65,16 @@ class Board {
         }
     }
 
-    turnTile(row, col) {
+    turnTile(row, col, forceEvent=false) { // we can force a retrieval of tileData via event if we need to
         try {
+            const tileState = this.tilesState[row][col];
+            if(!tileState && !forceEvent) {
+                const event = new CustomEvent('cantFlip', {detail : { targetTile : [row, col], targetState : tileState }}) // TODO: better event names
+                dispatchEvent(event) // dispatch event if the tile can't be flipped, can be used for user feedback or memos'
+                return;
+            }
             const event = new CustomEvent('turnedTile', { detail: { tileObj : this._getTileData(row, col) } });
+            this.tilesState[row][col] = 1
             dispatchEvent(event)
         } catch(err) {
             console.error(err)
