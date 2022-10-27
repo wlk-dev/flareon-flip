@@ -1,4 +1,4 @@
-const { Model, DataType } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class Score extends Model {}
@@ -6,23 +6,23 @@ class Score extends Model {}
 Score.init(
   {
     id: {
-      type: DataType.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
 
     score: {
-      type: Datatype.INTEGER,
+      type: DataTypes.INTEGER,
     },
 
     name: {
-      type: DataType.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
 
     user_id: {
-      type: DataType.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
         model: 'User',
         key: 'id',
@@ -39,4 +39,4 @@ Score.init(
   }
 );
 
-modeul.exports = Score;
+module.exports = Score;
