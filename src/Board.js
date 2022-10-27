@@ -4,8 +4,8 @@ const { uuid } = require("../utils/helpers")
 class Board {
     constructor() {
         this.tiles =  Array.from(Array(5), x => this._genRow()); // creates 5x5 table
-        this.tilesState = Array.from(Array(5), x => 0); // 0 = un-flipped, 1 = flipped
-        this.memoState = Array.from(Array(5), x => 0);
+        this.tilesState = Array.from(Array(5), x => Array(5).fill(0)); // 0 = un-flipped, 1 = flipped
+        this.memoState = Array.from(Array(5), x => Array(5).fill(0));
         this._bomb = 0;
         this.board_id = uuid();
     }
@@ -97,5 +97,10 @@ class Board {
         }
     }
 }
+
+// const x = new Board();
+// x.tilesState[0][0] = 1
+// x.tilesState[4][4] = 1
+// console.log(x.tilesState)
 
 module.exports = Board;
