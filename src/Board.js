@@ -1,5 +1,7 @@
 const uuid = require("../utils/helpers")
 
+
+// TODO: Add functions to retrieve exact, row info for tile mapping
 class Board {
     constructor() {
         this.tiles =  Array.from(Array(5), x => this._genRow()); // creates 5x5 table
