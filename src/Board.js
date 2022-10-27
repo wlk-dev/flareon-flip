@@ -1,11 +1,11 @@
-const uuid = require("../utils/helpers")
-
+const { uuid } = require("../utils/helpers")
 
 // TODO: Add functions to retrieve exact, row info for tile mapping
 class Board {
     constructor() {
         this.tiles =  Array.from(Array(5), x => this._genRow()); // creates 5x5 table
-        this.tilesState = Array.from(Array(5), x => 0) // 0 = un-flipped, 1 = flipped
+        this.tilesState = Array.from(Array(5), x => 0); // 0 = un-flipped, 1 = flipped
+        this.memoState = Array.from(Array(5), x => 0);
         this._bomb = 0;
         this.board_id = uuid();
     }
@@ -60,6 +60,22 @@ class Board {
             }
             return info
 
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
+    getRowData(row) {
+        try {
+            return {data : this.tiles[row], row};
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
+    getColumnData(col) {
+        try {
+            return { data : this.tiles.map( row => row[col] ), col }
         } catch(err) {
             console.error(err)
         }
