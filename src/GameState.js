@@ -2,58 +2,76 @@ const Board = require("./Board")
 
 class GameState {
     constructor() {
-        this.totalCoinsCollected = 0;
-        this.totalCoins = 0
-        this.board = this._genBoard()
+        this.totalCoins = 0;
+        this.coins = 0;
+        this.board = this._genBoard();
+        this.highMults = this.board.getHighMults();
         this.level = 1;
 
-        this.lastResult = true; // true = win
-
-        this.losses = 0;
-        this.consecutiveLosses = 0;
-
+        this.tilesFlipped = 0;
+        this.highTilesFlipped = 0;
         // TODO: Add level up conditions
     }
 
+    _flippedTile(high) {
+        this.tilesFlipped++;
+        if (high) this.highTilesFlipped++;
+    }
+
+    _resetGameData() {
+        this.board = this._genBoard();
+        this.highMults = this.board.getHighMults();
+
+        this.tilesFlipped = 0;
+        this.highTilesFlipped = 0;
+        this.coins = 0;
+    }
+
     _genBoard() {
-        return new Board()
+        return new Board();
     }
 
-    _newBoardWin() {
-        this.board = this._genBoard();
-        this.totalCoinsCollected += this.totalCoins;
-        this.totalCoins = 0;
-        this.lastResult = true;
+    _newBoardWin(level) {
+        this.totalCoins += this.coins;
+        this.level = level;
+
+        this._resetGameData();
     }
 
-    _newBoardLoss() {
-        this.board = this._genBoard();
-        this.totalCoins = 0;
-        this.losses++;
+    _newBoardLoss(level) {
+        this.level = level;
 
-        if (this.lastResult) {
-            this.lastResult = false;
-        } else {
-            this.consecutiveLosses++;
-        }
+        this._resetGameData();
     }
 
-    _checkForDemotion() {
-        if(this.losses > 5) {
-            return true
-        } else if (this.consecutiveLosses > 3) {
-            return true
+    _checkForDemotion(flippedBomb) {
+        if (flippedBomb) {
+            return { demote : true, toLevel : this.tilesFlipped < 2 ? 1 : this.level-1 };
         }
 
-        return false;
+        return {demote : false, toLevel : this.level};
+    }
+
+    _checkForWin() {
+        this.highTilesFlipped == this.highMults ? true : false;
     }
 
     _parseTile(eventObj) {
-        const tileObj = eventObj.detail.tileObj
+        const {isBomb, coinValue} = eventObj.detail.tileObj;
+        const {demote, toLevel} =  this._checkForDemotion( isBomb );
+
+        coinValue > 1 ? this._flippedTile(true) : this._flippedTile(false); // if its a high multiple tile pass true else false
+
+        if(demote) {
+            this._newBoardLoss(toLevel);
+        } else {
+            this.coins > 0 ? this.coins *= coinValue : this.coins += coinValue;
+            this._newBoardWin( this.level += 1 )
+        }
     }
 
     listen() {
-        addEventListener("turnedTile", this._parseTile)
+        addEventListener("turnedTile", this._parseTile);
     }
 
 }

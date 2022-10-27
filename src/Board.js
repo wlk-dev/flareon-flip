@@ -31,17 +31,25 @@ class Board {
 
     _getTileData(row, col) {
         try {
-            const value = this.tiles[row][col]
-            return { isBomb : value === 1 ? true : false, value }
+            const coinValue = this.tiles[row][col]
+            return { isBomb : coinValue === this._bomb ? true : false, coinValue }
         } catch(err) {
             console.error(err)
         }
     }
 
+    getHighMults() {
+        let numOfMults = 0;
+        for( const row of this.tiles ) {
+            row.forEach( tile => tile > 1 ? numOfMults++ : null );
+        }
+        return numOfMults;
+    }
+
     getRowInfo(row) {
         try {
             const info = { coinTotal : 0, bombTotal : 0 }
-            for ( let tile of this.tiles[row] ) {
+            for ( const tile of this.tiles[row] ) {
                 tile > this._bomb ? info.coinTotal+=tile : info.bombTotal++; // if tile value is not bomb then increment coin total else increment bomb total
             }
             return info
@@ -54,7 +62,7 @@ class Board {
     getColumnInfo(col) {
         try {
             const info = { coinTotal : 0, bombTotal : 0 }
-            for ( let row of this.tiles) {
+            for ( const row of this.tiles) {
                 let tile = row[col]
                 tile > this._bomb ? info.coinTotal+=tile : info.bombTotal++; // same as getRowInfo just with cols
             }
@@ -65,17 +73,17 @@ class Board {
         }
     }
 
-    getRowData(row) {
+    getRowData(row, ofBoard=this.tiles) {
         try {
-            return {data : this.tiles[row], row};
+            return {data : ofBoard[row], row};
         } catch(err) {
             console.error(err)
         }
     }
 
-    getColumnData(col) {
+    getColumnData(col, ofBoard=this.tiles) {
         try {
-            return { data : this.tiles.map( row => row[col] ), col }
+            return { data : ofBoard.map( row => row[col] ), col }
         } catch(err) {
             console.error(err)
         }
@@ -99,7 +107,11 @@ class Board {
 }
 
 // const x = new Board();
+// console.log(x.tiles)
+// console.log(x.getHighMults())
 // x.tilesState[0][0] = 1
+// console.log(x.getRowData(0, x.tilesState))
+// console.log(x.getColumnData(0, x.tilesState))
 // x.tilesState[4][4] = 1
 // console.log(x.tilesState)
 
