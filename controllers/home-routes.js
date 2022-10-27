@@ -5,7 +5,7 @@ const withAuth = require('../utils/auth');
 router.get("/", withAuth, async (req, res) => {
     try {
         const userData = await User.findByPk(req.session.user_id);
-        res.render('menu', { userData : userData.get({plain : true}) })
+        res.render('menu', { menuPage : true, userData : userData.get({plain : true}) })
 
     } catch(err) {
         res.status(500).json(err)
@@ -18,7 +18,7 @@ router.get('/signup', (req, res) => {
         return;
       }
     
-    res.render('signup')
+    res.render('signup', { userPage : true })
 })
 
 router.get('/login', (req, res) => {
@@ -27,7 +27,7 @@ router.get('/login', (req, res) => {
       return;
     }
   
-    res.render('login');
+    res.render('login', { userPage : true });
   });
   
 
