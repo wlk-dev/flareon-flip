@@ -19,6 +19,7 @@ User.init(
     name: {
       type: DataType.STRING,
       allowNull: false,
+      unique: true,
     },
     email: {
       type: DataType.STRING,
@@ -51,7 +52,7 @@ User.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'user',
+    modelName: 'User',
   }
 );
 
