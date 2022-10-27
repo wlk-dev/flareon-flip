@@ -4,13 +4,31 @@ const withAuth = require('../utils/auth');
 
 router.get("/", withAuth, async (req, res) => {
     try {
-        const userData = await User.findByPk(req.session.userId);
-        res.status(200).json(userData)
-        // res.render('menu', {userData})
+        const userData = await User.findByPk(1);
+        res.render('menu', { userData : userData.get({plain : true}) })
 
     } catch(err) {
         res.status(500).json(err)
     }
 });
+
+router.get('/signup', (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/');
+        return;
+      }
+    
+    res.render('signup')
+})
+
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/');
+      return;
+    }
+  
+    res.render('login');
+  });
+  
 
 module.exports = router;
