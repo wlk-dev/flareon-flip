@@ -1,0 +1,57 @@
+body {
+    background-color: #111;
+    margin: 0px;
+}
+
+#menu {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item {
+    color : whitesmoke;
+    font-size: clamp(3rem, 5vw, 8rem);
+    font-family: "Ibarra Real Nova", serif;
+
+    display: block;
+    text-decoration: none;
+    padding: clamp(0.25rem, 0.5vw, 1rem) 0rem;
+    transition: 400ms ease;
+}
+
+#menu-items {
+    margin-left: clamp(4rem, 20vw, 48rem);
+    position: relative;
+    z-index: 2;
+}
+
+#menu-items:hover > .menu-item {
+    opacity: 0.3;
+    /* transform: scale(.9); */
+}
+
+#menu-items:hover > .menu-item:hover {
+    opacity: 1;
+    color: darkorange;
+    transform: scale(1.02);
+
+}
+
+#menu-background-pattern {
+    background-image: url("https://i.redd.it/9j7eycwmq9q11.png");
+    background-position: 0% 0%;
+    position: absolute;
+
+    left: 0px;
+    top: 0px;
+
+    z-index: 1;
+
+    transition: opacity 800ms;
+
+}
+
+#menu-items:hover ~ #menu-background-pattern {
+    opacity: .3;
+}
