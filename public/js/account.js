@@ -1,12 +1,14 @@
 const signupFormHandler = async (event) => {
-  const username = document.querySelector('#username-signup').value.trim();
+  const name = document.querySelector('#username-signup').value.trim();
   const email = document.querySelector('#email-signup').value.trim();
   const password = document.querySelector('#password-signup').value.trim();
 
-  if (username && email && password) {
+  console.log(name, email, password)
+
+  if (name && email && password) {
     const response = await fetch('/api/users', {
       method: 'POST',
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ name, email, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -15,20 +17,21 @@ const signupFormHandler = async (event) => {
     } else {
       alert('Failed to sign up.');
     }
+  } else {
+    alert("Cannot be empty");
   }
 };
 
 const loginFormHandler = async (event) => {
-  console.log(event)
-  const username = document.querySelector('#username-login').value.trim();
+  const name = document.querySelector('#username-login').value.trim();
   const password = document.querySelector('#password-login').value.trim();
 
-  console.log(username, password)
+  console.log(typeof name, password)
 
-  if (username && password) {
+  if (name && password) {
     const response = await fetch('/api/users/login', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ name, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -37,8 +40,10 @@ const loginFormHandler = async (event) => {
     } else {
       alert('Failed to log in.');
     }
+  } else {
+    alert("Cannot be empty");
   }
 };
 
-$("#login-btn").on('click', loginFormHandler)
-$("#signup-btn").on('click', signupFormHandler)
+$("#login-btn").on('click', loginFormHandler);
+$("#signup-btn").on('click', signupFormHandler);
