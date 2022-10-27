@@ -56,6 +56,6 @@ body {
 
 }
 
-#menu-items:hover ~ #menu-background-pattern {
+#menu-items:hover ~ #menu-background-image {
     opacity: .3;
 }
