@@ -1,6 +1,4 @@
 const signupFormHandler = async (event) => {
-  event.preventDefault();
-
   const username = document.querySelector('#username-signup').value.trim();
   const email = document.querySelector('#email-signup').value.trim();
   const password = document.querySelector('#password-signup').value.trim();
@@ -13,7 +11,7 @@ const signupFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/');
+      document.location.replace('/menu');
     } else {
       alert('Failed to sign up.');
     }
@@ -21,10 +19,11 @@ const signupFormHandler = async (event) => {
 };
 
 const loginFormHandler = async (event) => {
-  event.preventDefault();
-
+  console.log(event)
   const username = document.querySelector('#username-login').value.trim();
   const password = document.querySelector('#password-login').value.trim();
+
+  console.log(username, password)
 
   if (username && password) {
     const response = await fetch('/api/users/login', {
@@ -34,17 +33,12 @@ const loginFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/');
+      document.location.replace('/menu');
     } else {
       alert('Failed to log in.');
     }
   }
 };
 
-document
-.querySelector('.signup-form')
-.addEventListener('submit', signupFormHandler);
-
-document
-  .querySelector('.login-form')
-  .addEventListener('submit', loginFormHandler);
+$("#login-btn").on('click', loginFormHandler)
+$("#signup-btn").on('click', signupFormHandler)
