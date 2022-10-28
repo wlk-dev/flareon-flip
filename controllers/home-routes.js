@@ -19,7 +19,7 @@ router.get('/signup', (req, res) => {
       }
     
     res.render('signup', { userPage : true })
-})
+});
 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
@@ -28,7 +28,6 @@ router.get('/login', (req, res) => {
     }
   
     res.render('login', { userPage : true });
-  });
-  
+});
 
 module.exports = router;
