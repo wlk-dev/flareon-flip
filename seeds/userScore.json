@@ -1,0 +1,17 @@
+[
+    {
+      "score": 1000,
+      "name": "Sal",
+      "user_id" : 1
+    },
+    {
+      "score": 150,
+      "name": "Lernantino",
+      "user_id" : 2
+    },
+    {
+      "score": 9900,
+      "name": "Amiko",
+      "user_id" : 3
+    }
+]
