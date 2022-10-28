@@ -1,13 +1,9 @@
-const { uuid } = require("../utils/helpers")
-
-// TODO: Add functions to retrieve exact, row info for tile mapping
 class Board {
     constructor() {
         this.tiles =  Array.from(Array(5), x => this._genRow()); // creates 5x5 table
         this.tilesState = Array.from(Array(5), x => Array(5).fill(0)); // 0 = un-flipped, 1 = flipped
         this.memoState = Array.from(Array(5), x => Array(5).fill(0));
         this._bomb = 0;
-        this.board_id = uuid();
     }
 
     _getWeightedNum() { // generate a number between 0 and 3 based off of weighted "percentages"
@@ -92,12 +88,12 @@ class Board {
     turnTile(row, col, forceEvent=false) { // we can force a retrieval of tileData via event if we need to
         try {
             const tileState = this.tilesState[row][col];
-            if(!tileState && !forceEvent) {
+            if(tileState || forceEvent) {
                 const event = new CustomEvent('cantFlip', {detail : { targetTile : [row, col], targetState : tileState }}) // TODO: better event names
                 dispatchEvent(event) // dispatch event if the tile can't be flipped, can be used for user feedback or memos'
                 return;
             }
-            const event = new CustomEvent('turnedTile', { detail: { tileObj : this._getTileData(row, col) } });
+            const event = new CustomEvent('turnedTile', { detail: { tileObj : { ...this._getTileData(row, col), targetTile : [row, col] }} });
             this.tilesState[row][col] = 1
             dispatchEvent(event)
         } catch(err) {
@@ -106,13 +102,91 @@ class Board {
     }
 }
 
-// const x = new Board();
-// console.log(x.tiles)
-// console.log(x.getHighMults())
-// x.tilesState[0][0] = 1
-// console.log(x.getRowData(0, x.tilesState))
-// console.log(x.getColumnData(0, x.tilesState))
-// x.tilesState[4][4] = 1
-// console.log(x.tilesState)
+class GameState {
+    constructor() {
+        this.totalCoins = 0;
+        this.coins = 0;
+        this.board = this._genBoard();
+        this.highMults = this.board.getHighMults();
+        this.level = 1;
 
-module.exports = Board;
+        this.tilesFlipped = 0;
+        this.highTilesFlipped = 0;
+        // TODO: Add level up conditions
+    }
+
+    _flippedTile(high) {
+        this.tilesFlipped++;
+        if (high) {
+            this.highTilesFlipped++
+        };
+    }
+
+    _resetGameData() {
+        this.board = this._genBoard();
+        this.highMults = this.board.getHighMults();
+
+        this.tilesFlipped = 0;
+        this.highTilesFlipped = 0;
+        this.coins = 0;
+
+        console.trace('reset')
+        console.table(this.board.tiles);
+    }
+
+    _genBoard() {
+        return new Board();
+    }
+
+    _newBoardWin(level) {
+        this.totalCoins += this.coins;
+        this.level = level;
+
+        this._resetGameData();
+    }
+
+    _newBoardLoss(level) {
+        this.level = level;
+
+        this._resetGameData();
+    }
+
+    _checkForDemotion(flippedBomb) {
+        if (flippedBomb) {
+            return { demote : true, toLevel : this.tilesFlipped < this.level ? 1 : ( this.level === 1 ? 1 : this.level-1 ) };
+        }
+
+        return {demote : false, toLevel : this.level};
+    }
+
+    _checkForWin() {
+        return this.highTilesFlipped == this.highMults
+    }
+
+    _parseTile(eventObj) {
+        const {isBomb, coinValue, targetTile} = eventObj.detail.tileObj;
+        const {demote, toLevel} =  this._checkForDemotion( isBomb );
+        
+        console.log(this.board.getRowData( targetTile[0] ), demote, toLevel)
+        
+        coinValue > 1 ? this._flippedTile(true) : this._flippedTile(false); // if its a high multiple tile pass true else false
+        this.coins > 1 ? this.coins *= coinValue : this.coins += coinValue;
+
+        if(demote) {
+            this._newBoardLoss(toLevel);
+        } else if (this._checkForWin()) {
+            this._newBoardWin( this.level += 1 )
+        }
+        
+    }
+
+    listen() {
+        addEventListener("turnedTile", event => this._parseTile(event));
+        addEventListener("cantFlip", event => console.log(event))
+    }
+
+}
+
+const game = new GameState();
+game.listen()
+console.table(game.board.tiles)

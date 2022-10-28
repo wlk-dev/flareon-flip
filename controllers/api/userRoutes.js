@@ -58,4 +58,27 @@ router.post('/logout', (req, res) => {
   }
 });
 
+router.delete('/delete', (req, res) => {
+  if (req.session.logged_in) {
+    User.destroy({
+      where : {
+        id : req.session.user_id,
+      }
+    })
+    .then( () => {
+      req.session.destroy(() => {
+        res.status(204).end();
+      })
+    })
+    .catch( err => {
+      console.trace(err)
+      res.status(401).json(err)
+    })
+
+  } else {
+    console.trace("req.session.logged_in evaluated to false")
+    res.status(404).end();
+  }
+})
+
 module.exports = router;
