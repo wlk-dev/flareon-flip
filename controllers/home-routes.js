@@ -19,7 +19,7 @@ router.get('/signup', (req, res) => {
       }
     
     res.render('signup', { userPage : true })
-});
+})
 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
@@ -28,10 +28,24 @@ router.get('/login', (req, res) => {
     }
   
     res.render('login', { userPage : true });
+  });
+  
+
+router.get('/leaderboard', withAuth, (req, res) => {
+  res.render('leaderboard', { leaderboardPage : true });
+})
+
+router.get('/how-to-play', withAuth, (req, res) => {
+  res.render('how-to-play', { userPage : true })
 });
 
-router.get('/profile', withAuth, (req, res) => {
-  res.render('profile', { profilePage : true });
+router.get('/profile', withAuth, async (req, res) => {
+  try {
+    const profileData = await User.findByPk(req.session.user_id)
+    res.render('profile', { profilePage : true, profileData : profileData.get({plain : true}) });
+  } catch(err) {
+    res.status(500).json(err)
+  };
 });
 
 module.exports = router;

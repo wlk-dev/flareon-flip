@@ -11,7 +11,7 @@ Score.belongsTo(User, {
   foreignKey: 'user_id',
 });
 
-User.hasMany(HiScore, {
+User.hasOne(HiScore, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
 });
