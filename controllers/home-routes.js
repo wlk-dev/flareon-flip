@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require("../models")
+const { User, HiScore } = require("../models")
 const withAuth = require('../utils/auth');
 
 router.get("/", withAuth, async (req, res) => {
@@ -28,11 +28,29 @@ router.get('/login', (req, res) => {
     }
   
     res.render('login', { userPage : true });
-  });
+});
   
 
-router.get('/leaderboard', withAuth, (req, res) => {
-  res.render('leaderboard', { leaderboardPage : true });
+router.get('/leaderboard', withAuth, async (req, res) => {
+  try{
+    const leaderData = await HiScore.findAll({
+      order: [
+        ['score', 'DESC'],
+      ]
+      
+    });
+    
+    const scores = leaderData.map((score) => score.get({plain: true})) 
+    console.log(scores)
+    res.render('leaderboard', { 
+      scores,
+      leaderboardPage : true
+      
+  });
+    } catch (err) {
+    res.status(500).json(err);
+   }
+  
 })
 
 router.get('/how-to-play', withAuth, (req, res) => {
