@@ -28,13 +28,17 @@ router.get('/login', (req, res) => {
     }
   
     res.render('login', { userPage : true });
-  });
+});
   
 
-router.get('/leaderboard', withAuth, (req, res) => {
-  
-  res.render('leaderboard', { leaderboardPage : true });
-})
+router.get('/leaderboard', withAuth, async (req, res) => {
+  try{
+    const userLeader = await User.findByPk(req.session.user_id);
+    res.render('leaderboard', { leaderboardPage : true, userLeader : userLeader.get({palin : true}) });
+  } catch(err) {
+    res.status(500).json(err)
+  }  
+});
 
 
 
