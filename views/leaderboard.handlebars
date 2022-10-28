@@ -2,17 +2,16 @@
 		<div class="leaderboard">
 			<div class="head">
 				<i class="fas fa-crown"></i>
-				<h1>Most active Players</h1>
+				<h3>High Score</h3>
 			</div>
 			<div class="body">
 				<ol>
-					<li>
-						{{!-- {{#each userLeader.id as |name|}} --}}
-						<mark>{{userLeader.name}}</mark>
-						<small>{{userLeader.score}}</small>
-						{{!-- {{/each}} --}}
-					</li>
-					</li>
+					
+						{{#each scores as |scores|}}
+						{{>leaderScore}}
+						{{/each}}
+					
+		
 				</ol>
 			</div>
 		</div>
