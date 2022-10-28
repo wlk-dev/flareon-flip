@@ -66,4 +66,8 @@ router.get('/profile', withAuth, async (req, res) => {
   };
 });
 
+router.get('/game', withAuth, (req, res) => {
+  res.render('game', { gamePage : true})
+});
+
 module.exports = router;
