@@ -34,10 +34,22 @@ const loginFormHandler = async (event) => {
     if (response.ok) {
       document.location.replace('/');
     } else {
-      alert('Failed to log in.');
+      await Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "We couldn't find anyone matching those credentials...",
+        footer: "</p><a href='/signup'>Don't have an account?</a>"
+      })
     }
   } else {
-    alert("Cannot be empty");
+    let error_msg = !name ? "Please enter a valid username!" : "Please enter a valid password!"
+    error_msg = !name && !password ? "Login fields cannot be left empty!" : error_msg;
+
+    await Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: error_msg,
+    })
   }
 };
 

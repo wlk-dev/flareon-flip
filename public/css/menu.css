@@ -1,3 +1,5 @@
+/* Based Heavily upon this video : https://www.youtube.com/watch?v=NUeCNvYY_x4 */
+
 body {
     background-color: #333;
     margin: 0px;
@@ -12,7 +14,7 @@ body {
 .menu-item {
     color : whitesmoke;
     font-size: clamp(3rem, 5vw, 8rem);
-    font-family: "Ibarra Real Nova", serif;
+    font-family: 'Times New Roman', Times, serif;
 
     display: block;
     text-decoration: none;
