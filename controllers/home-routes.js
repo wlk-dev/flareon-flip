@@ -30,9 +30,4 @@ router.get('/login', (req, res) => {
     res.render('login', { userPage : true });
 });
 
-router.get('/how-to-play', (req, res) => {
-  res.render('how-to-play', { userPage : true })
-})
-  
-
 module.exports = router;
