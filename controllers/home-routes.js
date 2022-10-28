@@ -19,7 +19,7 @@ router.get('/signup', (req, res) => {
       }
     
     res.render('signup', { userPage : true })
-});
+})
 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
@@ -28,6 +28,24 @@ router.get('/login', (req, res) => {
     }
   
     res.render('login', { userPage : true });
+  });
+  
+
+router.get('/leaderboard', withAuth, (req, res) => {
+  
+  res.render('leaderboard', { leaderboardPage : true });
+})
+
+
+
+router.get('/how-to-play', withAuth, (req, res) => {
+  res.render('how-to-play', { h2pPage : true })
+})
+
+
+router.get('/profile', withAuth, (req, res) => {
+  res.render('profile', { profilePage : true });
 });
+
 
 module.exports = router;
