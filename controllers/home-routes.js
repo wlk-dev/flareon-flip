@@ -30,4 +30,8 @@ router.get('/login', (req, res) => {
     res.render('login', { userPage : true });
 });
 
+router.get('/profile', withAuth, (req, res) => {
+  res.render('profile', { profilePage : true });
+});
+
 module.exports = router;
