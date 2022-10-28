@@ -1,0 +1,18 @@
+	<div class="container">
+		<div class="leaderboard">
+			<div class="head">
+				<i class="fas fa-crown"></i>
+				<h3>High Score</h3>
+			</div>
+			<div class="body">
+				<ol>
+					
+						{{#each scores as |scores|}}
+						{{>leaderScore}}
+						{{/each}}
+					
+		
+				</ol>
+			</div>
+		</div>
+	</div>
