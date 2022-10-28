@@ -153,7 +153,7 @@ class GameState {
 
     _checkForDemotion(flippedBomb) {
         if (flippedBomb) {
-            return { demote : true, toLevel : this.tilesFlipped < 2 ? 1 : ( this.level === 1 ? 1 : this.level-1 ) };
+            return { demote : true, toLevel : this.tilesFlipped < this.level ? 1 : ( this.level === 1 ? 1 : this.level-1 ) };
         }
 
         return {demote : false, toLevel : this.level};
