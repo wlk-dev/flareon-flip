@@ -32,20 +32,20 @@ router.get('/login', (req, res) => {
   
 
 router.get('/leaderboard', withAuth, (req, res) => {
-  
   res.render('leaderboard', { leaderboardPage : true });
 })
 
-
-
 router.get('/how-to-play', withAuth, (req, res) => {
-  res.render('how-to-play', { h2pPage : true })
-})
-
-
-router.get('/profile', withAuth, (req, res) => {
-  res.render('profile', { profilePage : true });
+  res.render('how-to-play', { userPage : true })
 });
 
+router.get('/profile', withAuth, async (req, res) => {
+  try {
+    const profileData = await User.findByPk(req.session.user_id)
+    res.render('profile', { profilePage : true, profileData : profileData.get({plain : true}) });
+  } catch(err) {
+    res.status(500).json(err)
+  };
+});
 
 module.exports = router;
