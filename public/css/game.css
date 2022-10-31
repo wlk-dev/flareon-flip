@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;400&family=Press+Start+2P&display=swap');
+
+body {
+  background-color: rgb(189, 76, 76);
+}
+.game-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  position: sticky;
+}
+.group-1,
+.group-2,
+.group-3,
+.group-4,
+.group-5 {
+  position: sticky;
+  margin-bottom: 5px;
+}
+
+.border {
+  border: rgb(250, 222, 205) solid 4.3px;
+  border-radius: 7px;
+}
+.locator {
+  position: sticky;
+  width: 107px;
+  height: 107px;
+}
+/* Level Text block */
+.level {
+  position: sticky;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+  background-color: rgb(248, 233, 214);
+  color: rgb(86, 25, 25);
+  width: 100px;
+  height: 45px;
+  border: solid 2px rgb(126, 20, 20);
+  border-radius: 8px;
+  padding: 2px;
+  margin-left: 300px;
+}
+/* Level Text */
+/* Total Coin Amount */
+.total {
+  position: sticky;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+  background-color: rgb(248, 233, 214);
+  color: rgb(86, 25, 25);
+  width: 250px;
+  height: 45px;
+  border: solid 2px rgb(126, 20, 20);
+  border-radius: 8px;
+  padding: 2px;
+}
+/* Total Coin amount text */
+
+/* Coins during round */
+.coins-current {
+  position: sticky;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+  background-color: rgb(248, 233, 214);
+  color: rgb(86, 25, 25);
+  width: 400px;
+  height: 45px;
+  border: solid 2px rgb(126, 20, 20);
+  border-radius: 8px;
+  padding: 2px;
+  margin-bottom: 20px;
+}
+/* Coins text */
+
+/* Vertical Locator Numbers */
+/*Coins (Horiz/row)*/
+#first-no {
+  transform: translate(615px, -715px);
+}
+#third-no {
+  transform: translate(615px, -738px);
+}
+#fifth-no {
+  transform: translate(615px, -760px);
+}
+#seventh-no {
+  transform: translate(615px, -780px);
+}
+#ninth-no {
+  transform: translate(615px, -800px);
+}
+/* Number of Flareons in Row */
+#second-no {
+  transform: translate(635px, -735px);
+}
+#fourth-no {
+  transform: translate(635px, -755px);
+}
+#sixth-no {
+  transform: translate(635px, -775px);
+}
+#eighth-no {
+  transform: translate(635px, -795px);
+}
+#tenth-no {
+  transform: translate(635px, -820px);
+}
+/* Horizontal Locator Numbers */
+/* Coins (Vertical) */
+#one-horz-no {
+  transform: translate(50px, -825px);
+}
+#three-horz-no {
+  transform: translate(160px, -963px);
+}
+#five-horz-no {
+  transform: translate(270px, -1100px);
+}
+#seven-horz-no {
+  transform: translate(380px, -1240px);
+}
+#nine-horz-no {
+  transform: translate(500px, -1378px);
+}
+/* Flareons in each Column */
+#two-horz-no {
+  transform: translate(70px, -840px);
+}
+#four-horz-no {
+  transform: translate(180px, -980px);
+}
+
+#six-horz-no {
+  transform: translate(290px, -1120px);
+}
+
+#eight-horz-no {
+  transform: translate(400px, -1256px);
+}
+
+#ten-horz-no {
+  transform: translate(510px, -1395px);
+}
+/* Number styling */
+.numbers {
+  position: sticky;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 17px;
+  color: rgb(96, 31, 31);
+}
+/* Navbar */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+
+a {
+	text-decoration: none;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+
+
+.logo {
+	margin: 0;
+	font-size: 1.45em;
+}
+
+.main-nav {
+	margin-top: 5px;
+
+}
+.logo a,
+.main-nav a {
+	padding: 10px 15px;
+	text-align: center;
+text-transform: uppercase;
+	display: block;
+  color: #871515;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.main-nav a {
+	color: #871515;
+	font-size: .99em;
+  font-weight: 600;
+}
+
+.main-nav a:hover {
+	color: #c87676;
+}
+
+
+
+.header {
+	padding-top: .5em;
+	border: 1px solid #832a2a;
+	background-color: #f4f4f4;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+  margin-bottom: 50px;
+}
+
+
+
+
+@media (min-width: 769px) {
+	.header,
+	.main-nav {
+		display: flex;
+	}
+	
+
+@media (min-width: 1025px) {
+	.header {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+}
+@media screen (min-width: 500px) and (max-width: 1519px);
+  
+}

@@ -21,23 +21,27 @@
 
     {{#if profilePage}}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/css/profile.css"
+        <link rel="stylesheet" href="/css/profile.css" />
     {{/if}}
+    {{#if gamePage}}
+    <link rel="stylesheet" href="/css/game.css" />
+{{/if}}
 
 </head>
     <body>
         {{{body}}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     {{#if userPage}}
         <script src="/js/account.js" type="text/javascript"></script>
     {{/if}}
     {{#if menuPage}}
-        <script src="/js/logout.js"></script>
+        <script src="/js/logout.js" type="text/javascript"></script>
     {{/if}}
     {{#if profilePage}}
-        <script src="/js/delete.js"></script>
+        <script src="/js/delete.js" type="text/javascript"></script>
     {{/if}}
     </body>
 </html>
