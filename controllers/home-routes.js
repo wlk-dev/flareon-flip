@@ -76,7 +76,11 @@ router.get('/profile', withAuth, async (req, res) => {
     for (let i=0; i < profileScores.length; i++) {scoresArray.push(profileScores[i].score)}
     const profileHigh = baseNumberFormat.format(Math.max(...scoresArray))
     scoresArray = scoresArray.map((score) => baseNumberFormat.format(score))
-    res.render('profile', { 
+    scoresArray = scoresArray.slice(-10)
+    scoresArray = scoresArray.reverse()
+    const hasScores = scoresArray.length > 0 ? true : false
+    res.render('profile', {
+      hasScores,
       scoresArray,
       profileGames,
       profileHigh,
