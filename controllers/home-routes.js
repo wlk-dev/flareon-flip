@@ -1,5 +1,8 @@
+// Number formatting funcions
+const baseNumberFormat = Intl.NumberFormat('en', {style: 'decimal', maximumFractionDigits: 0});
+
 const router = require('express').Router();
-const { User, HiScore } = require("../models")
+const { User, HiScore, Score } = require("../models")
 const withAuth = require('../utils/auth');
 
 router.get("/", withAuth, async (req, res) => {
@@ -59,8 +62,31 @@ router.get('/how-to-play', withAuth, (req, res) => {
 
 router.get('/profile', withAuth, async (req, res) => {
   try {
-    const profileData = await User.findByPk(req.session.user_id)
-    res.render('profile', { profilePage : true, profileData : profileData.get({plain : true}) });
+    const profileData = await User.findByPk(req.session.user_id, {
+      include: [
+        {
+        model: Score,
+        attributes: ["score"],
+        }
+      ]
+    })
+    let scoresArray = [];
+    const profileGames = profileData.Scores.length
+    const profileScores = profileData.Scores
+    for (let i=0; i < profileScores.length; i++) {scoresArray.push(profileScores[i].score)}
+    const profileHigh = baseNumberFormat.format(Math.max(...scoresArray))
+    scoresArray = scoresArray.map((score) => baseNumberFormat.format(score))
+    scoresArray = scoresArray.slice(-10)
+    scoresArray = scoresArray.reverse()
+    const hasScores = scoresArray.length > 0 ? true : false
+    res.render('profile', {
+      hasScores,
+      scoresArray,
+      profileGames,
+      profileHigh,
+      profilePage : true,
+      profileData : profileData.get({plain : true})
+    });
   } catch(err) {
     res.status(500).json(err)
   };
