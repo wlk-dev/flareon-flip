@@ -206,16 +206,16 @@ class GameInterface {
                 elem.src = "https://i.ibb.co/whzwYPV/My-project.png"
                 break;
             case 0:
-                // elem.src = 
+                elem.src = "https://i.ibb.co/82pFH7N/flareon-1.png"
                 break;
             case 1:
-                elem.src = "https://i.ibb.co/SKqRcnG/1667244937462.png"
+                elem.src = "https://i.ibb.co/B4G3T7Y/1667254397926-1.png"
                 break;
             case 2:
-                elem.src = "https://i.ibb.co/pd714tF/1667244832605.png"
+                elem.src = "https://i.ibb.co/tqG4R7J/1667254471372-1.png"
                 break;
             case 3:
-                elem.src = "https://i.ibb.co/CQjVfVS/1667244802045.png"
+                elem.src = "https://i.ibb.co/MkrMFwc/1667254498700-1.png"
                 break;
         }
     }
