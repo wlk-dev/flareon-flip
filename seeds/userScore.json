@@ -13,5 +13,32 @@
       "score": 9900,
       "name": "Amiko",
       "user_id" : 3
+    },
+
+    {
+      "score": 4500,
+      "name": "Amiko",
+      "user_id" : 3
+    },
+
+
+    {
+      "score": 900,
+      "name": "Max",
+      "user_id" : 4
+    },
+
+    {
+      "score": 400,
+      "name": "Davis",
+      "user_id" : 5
+    },
+
+    {
+      "score": 1230,
+      "name": "April",
+      "user_id" : 6
     }
+
+
 ]
