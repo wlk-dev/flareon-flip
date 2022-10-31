@@ -193,14 +193,31 @@ class GameState {
 class GameInterface {
     constructor(state) {
         this.state = state
+        this.state.listen();
+        this.loadBoard();
     }
 
     loadBoard() {
         let rows = []; let cols = [];
         for( let i = 0; i < 5; i++ ) {
-            rows.push( this.state.board.getRowInfo(i) )
-            cols.push( this.state.board.getColumnInfo(i) ) // prolly also map these
+            rows.push( { row : i, data : this.state.board.getRowInfo(i)} )
+            cols.push( { col : i, data : this.state.board.getColumnInfo(i)} ) // prolly also map these
         }
+
+        rows.map( data => {
+            let [coins, bombs] = [...$(`.row_0-${data.row+1}`).children()]
+
+            $(coins).text(data.data.coinTotal)
+            $(bombs).text(data.data.bombTotal)
+        });
+
+        cols.map( data => {
+            let [coins, bombs] = [...$(`.row_${data.col+1}-0`).children()]
+
+            $(coins).text(data.data.coinTotal)
+            $(bombs).text(data.data.bombTotal)
+        });
+
     }
 
     updateBoard(board) {
@@ -208,6 +225,17 @@ class GameInterface {
             this.state.board.getRowData(i, board) // map these over game element
             this.state.board.getColumnData(i, board)
         }
+
+        console.log('here', board, this.state.coins)
+
+        $("#level").text(this.state.level)
+        $("#total-coins").text(this.state.totalCoins)
+        $("#coins-current").text(this.state.coins)
+
+        // It honestly doesn't matter the order of the ID's
+        // Just let the interface handle the parsing between them, it will honestly work out
+        // Because the client doesn't need to be aware of the actual order of the board as long as it follows the same sort of structure
+
     }
 
     listen() { // add event listener to image group that listens for clicks, check id for `tile` string
@@ -215,6 +243,8 @@ class GameInterface {
     }
 }
 
-const game = new GameState();
-game.listen()
-console.table(game.board.tiles)
+const state = new GameState();
+const game = new GameInterface(state);
+game.listen();
+// game.listen()
+// console.table(game.board.tiles)
