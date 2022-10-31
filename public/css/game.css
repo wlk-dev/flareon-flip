@@ -3,6 +3,7 @@
 body {
   background-color: rgb(189, 76, 76);
 }
+
 .game-container {
   display: block;
   margin-left: auto;
@@ -36,12 +37,12 @@ body {
   font-size: 13px;
   background-color: rgb(248, 233, 214);
   color: rgb(86, 25, 25);
-  width: 100px;
+  width: 90px;
   height: 45px;
   border: solid 2px rgb(126, 20, 20);
   border-radius: 8px;
   padding: 2px;
-  margin-left: 300px;
+  margin-left: 380px;
 }
 /* Level Text */
 /* Total Coin Amount */
@@ -52,7 +53,7 @@ body {
   font-size: 13px;
   background-color: rgb(248, 233, 214);
   color: rgb(86, 25, 25);
-  width: 250px;
+  width: 230px;
   height: 45px;
   border: solid 2px rgb(126, 20, 20);
   border-radius: 8px;
@@ -68,7 +69,7 @@ body {
   font-size: 13px;
   background-color: rgb(248, 233, 214);
   color: rgb(86, 25, 25);
-  width: 400px;
+  width: 300px;
   height: 45px;
   border: solid 2px rgb(126, 20, 20);
   border-radius: 8px;
@@ -215,6 +216,7 @@ a {
   margin-bottom: 50px;
 }
 
+<<<<<<< HEAD
 /* .image-group {
  
   display: flex;
@@ -225,6 +227,19 @@ a {
   margin: 3px;
   
 } */
+=======
+.static:hover {
+  opacity:0;
+}
+.static {
+  position:absolute;
+  background:#c04a4a
+}
+.flareon-fact 
+{
+transform: translate(530px, -10px); 
+}
+>>>>>>> main
 
 
 @media (min-width: 769px) {
@@ -240,5 +255,10 @@ a {
 		justify-content: space-between;
 	}
 
+<<<<<<< HEAD
 }
+=======
+@media screen (min-width: 500px) and (max-width: 1519px);
+  
+>>>>>>> main
 }
