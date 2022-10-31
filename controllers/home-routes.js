@@ -57,7 +57,7 @@ router.get('/leaderboard', withAuth, async (req, res) => {
 })
 
 router.get('/how-to-play', withAuth, (req, res) => {
-  res.render('how-to-play', { userPage : true })
+  res.render('how-to-play', { h2pPage : true })
 });
 
 router.get('/profile', withAuth, async (req, res) => {
