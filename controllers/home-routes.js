@@ -1,3 +1,6 @@
+// Number formatting funcions
+const baseNumberFormat = Intl.NumberFormat('en', {style: 'decimal', maximumFractionDigits: 0});
+
 const router = require('express').Router();
 const { User, HiScore, Score } = require("../models")
 const withAuth = require('../utils/auth');
@@ -70,11 +73,11 @@ router.get('/profile', withAuth, async (req, res) => {
     let scoresArray = [];
     const profileGames = profileData.Scores.length
     const profileScores = profileData.Scores
-    const scores = profileData.Scores.map((score) => score.get({plain: true}))
     for (let i=0; i < profileScores.length; i++) {scoresArray.push(profileScores[i].score)}
-    const profileHigh = Math.max(...scoresArray)
+    const profileHigh = baseNumberFormat.format(Math.max(...scoresArray))
+    scoresArray = scoresArray.map((score) => baseNumberFormat.format(score))
     res.render('profile', { 
-      scores,
+      scoresArray,
       profileGames,
       profileHigh,
       profilePage : true,
