@@ -8,7 +8,9 @@ html,
 body {
 	height: 100%;
 }
+
 body {
+	background-image: url("../images/leaderboard-bg.png");
 	font: 16px/1.2 "Roboto", sans-serif;
 	color: #333;
 }
@@ -30,13 +32,13 @@ a {
 
 /* container */
 .container {
-	width: 300px;
+	width: 80%;
 	height: auto;
 	border-radius: 10px;
-	background-color: white;
+	background: linear-gradient(to bottom, #3a404d, #181c26);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	position: absolute;
-	top: 50%;
+	top: 25%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 1;
@@ -50,7 +52,7 @@ a {
 
 /* head */
 .leaderboard .head {
-	padding: 20px 16px;
+	padding: 18px;
 	color: snow;
 	font-size: 20px;
 	text-align: center;
@@ -66,7 +68,7 @@ a {
 	font-size: 16px;
 }
 .leaderboard ol {
-	counter-reset: number; /* 定義和初始化計數器 */
+	counter-reset: number;
 }
 .leaderboard li {
 	padding: 16px;
@@ -77,11 +79,12 @@ a {
 	color: snow;
 	background-color: transparent;
 }
+
 .leaderboard li:before {
-	counter-increment: number; /* 遞增計數器 */
-	content: counter(number) "."; /* 顯示計數器 */
-	margin-right: 4px;
+	counter-increment: number; 
+	content: counter(number) "."; 
 }
+
 .leaderboard li:nth-child(1) {
 	background: #fa6855;
 }
@@ -96,4 +99,90 @@ a {
 }
 .leaderboard li:nth-child(5) {
 	background: #c24448;
+}
+
+/* Navbar */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+	text-decoration: none;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+
+.logo {
+	margin: 0;
+	font-size: 1.45em;
+}
+
+.main-nav {
+	margin-top: 5px;
+
+}
+
+.logo a,
+.main-nav a {
+	padding: 10px 15px;
+	text-align: center;
+	text-transform: uppercase;
+	display: block;
+  color: #871515;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.main-nav a {
+	color: #871515;
+	font-size: .99em;
+  font-weight: 600;
+}
+
+.main-nav a:hover {
+	color: #c87676;
+}
+
+
+.header {
+	margin-top: 25px;
+	border: 2px solid #832a2a;
+	background: linear-gradient(to right, rgb(255, 153, 0), #ff682cd7);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+  margin-bottom: 50px;
+}
+
+/* Removes default bullet points from lists */
+ol, ul {
+	padding-inline-start: 0px;
+  list-style: none;
+}
+
+
+
+@media (min-width: 769px) {
+	.header,
+	.main-nav {
+		display: flex;
+	}
+	
+
+@media (min-width: 1025px) {
+	.header {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+}
+@media screen (min-width: 500px) and (max-width: 1519px);
+  
 }
