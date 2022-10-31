@@ -11,6 +11,7 @@ body {
 
 body {
 	background-image: url("../images/leaderboard-bg.png");
+	background-size: cover;
 	font: 16px/1.2 "Roboto", sans-serif;
 	color: #333;
 }
@@ -38,7 +39,7 @@ a {
 	background: linear-gradient(to bottom, #3a404d, #181c26);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	position: absolute;
-	top: 25%;
+	top: 30%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 1;
@@ -52,7 +53,6 @@ a {
 
 /* head */
 .leaderboard .head {
-	padding: 18px;
 	color: snow;
 	font-size: 20px;
 	text-align: center;
@@ -73,6 +73,7 @@ a {
 .leaderboard li {
 	padding: 16px;
 	display: flex;
+	background: #fa6855;
 }
 .leaderboard li mark {
 	flex-grow: 1;
@@ -85,7 +86,7 @@ a {
 	content: counter(number) "."; 
 }
 
-.leaderboard li:nth-child(1) {
+/* .leaderboard li:nth-child(1) {
 	background: #fa6855;
 }
 .leaderboard li:nth-child(2) {
@@ -99,7 +100,7 @@ a {
 }
 .leaderboard li:nth-child(5) {
 	background: #c24448;
-}
+} */
 
 /* Navbar */
 ul {
@@ -152,7 +153,6 @@ a {
 
 
 .header {
-	margin-top: 25px;
 	border: 2px solid #832a2a;
 	background: linear-gradient(to right, rgb(255, 153, 0), #ff682cd7);
 	-webkit-border-radius: 5px;
@@ -169,7 +169,7 @@ ol, ul {
 
 
 
-@media (min-width: 769px) {
+@media (min-width: 200px) {
 	.header,
 	.main-nav {
 		display: flex;
@@ -183,6 +183,4 @@ ol, ul {
 	}
 
 }
-@media screen (min-width: 500px) and (max-width: 1519px);
-  
 }

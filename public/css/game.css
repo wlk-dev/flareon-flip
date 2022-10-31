@@ -168,8 +168,6 @@ ul {
   list-style: none;
 }
 
-
-
 a {
 	text-decoration: none;
   font-family: 'Nunito Sans', sans-serif;
@@ -243,7 +241,7 @@ transform: translate(530px, -10px);
 		flex-direction: row;
 		justify-content: space-between;
 	}
- 
+
 @media screen (min-width: 500px) and (max-width: 1519px);
   
 }
