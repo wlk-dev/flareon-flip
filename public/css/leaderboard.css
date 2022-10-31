@@ -169,7 +169,7 @@ ol, ul {
 
 
 
-@media (min-width: 769px) {
+@media (min-width: 200px) {
 	.header,
 	.main-nav {
 		display: flex;
@@ -183,6 +183,4 @@ ol, ul {
 	}
 
 }
-@media screen (min-width: 500px) and (max-width: 1519px);
-  
 }
