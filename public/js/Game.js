@@ -178,6 +178,8 @@ class GameState {
             this._newBoardWin( this.level += 1 )
         }
         
+        const event = new CustomEvent('updateState', { detail : { boardState : this.board.tilesState } });
+        dispatchEvent(event);
     }
 
     listen() {
@@ -185,6 +187,32 @@ class GameState {
         addEventListener("cantFlip", event => console.log(event))
     }
 
+}
+
+
+class GameInterface {
+    constructor(state) {
+        this.state = state
+    }
+
+    loadBoard() {
+        let rows = []; let cols = [];
+        for( let i = 0; i < 5; i++ ) {
+            rows.push( this.state.board.getRowInfo(i) )
+            cols.push( this.state.board.getColumnInfo(i) ) // prolly also map these
+        }
+    }
+
+    updateBoard(board) {
+        for( let i = 0; i < 5; i++ ) {
+            this.state.board.getRowData(i, board) // map these over game element
+            this.state.board.getColumnData(i, board)
+        }
+    }
+
+    listen() { // add event listener to image group that listens for clicks, check id for `tile` string
+        addEventListener("updateState", event => this.updateBoard( event.detail.boardState ))
+    }
 }
 
 const game = new GameState();
