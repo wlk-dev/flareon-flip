@@ -21,7 +21,7 @@ body {
 }
 
 .border {
-  border: rgb(250, 222, 205) solid 4.3px;
+  border: rgb(245, 230, 220) solid 4.3px;
   border-radius: 7px;
 }
 .locator {
@@ -35,8 +35,8 @@ body {
   text-align: center;
   display: inline-block;
   font-size: 13px;
-  background-color: rgb(248, 233, 214);
-  color: rgb(86, 25, 25);
+  background-color: rgb(255, 255, 255);
+  color: #561919;
   width: 90px;
   height: 45px;
   border: solid 2px rgb(126, 20, 20);
@@ -51,8 +51,8 @@ body {
   text-align: center;
   display: inline-block;
   font-size: 13px;
-  background-color: rgb(248, 233, 214);
-  color: rgb(86, 25, 25);
+  background-color: rgb(255, 255, 255);
+  color: #561919;
   width: 230px;
   height: 45px;
   border: solid 2px rgb(126, 20, 20);
@@ -67,7 +67,7 @@ body {
   text-align: center;
   display: inline-block;
   font-size: 13px;
-  background-color: rgb(248, 233, 214);
+  background-color: rgb(247, 247, 247);
   color: rgb(86, 25, 25);
   width: 300px;
   height: 45px;
@@ -209,7 +209,7 @@ a {
 .header {
 	padding-top: .5em;
 	border: 1px solid #832a2a;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -239,9 +239,22 @@ a {
 {
 transform: translate(530px, -10px); 
 }
+<<<<<<< HEAD
+>>>>>>> main
+=======
+.textbox {
 >>>>>>> main
 
-
+}
+#fact {
+  background-color: #f4f4f4; 
+  padding: 35px;
+  width: 175px;
+  height: 35px;
+  position: absolute;
+  font-size: 17px;
+  transform: translate(535px,75px);   
+}
 @media (min-width: 769px) {
 	.header,
 	.main-nav {
