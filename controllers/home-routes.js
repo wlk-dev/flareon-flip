@@ -67,8 +67,19 @@ router.get('/profile', withAuth, async (req, res) => {
         }
       ]
     })
-    console.log(profileData.Scores);
-    res.render('profile', { profilePage : true, profileData : profileData.get({plain : true}) });
+    let scoresArray = [];
+    const profileGames = profileData.Scores.length
+    const profileScores = profileData.Scores
+    const scores = profileData.Scores.map((score) => score.get({plain: true}))
+    for (let i=0; i < profileScores.length; i++) {scoresArray.push(profileScores[i].score)}
+    const profileHigh = Math.max(...scoresArray)
+    res.render('profile', { 
+      scores,
+      profileGames,
+      profileHigh,
+      profilePage : true,
+      profileData : profileData.get({plain : true})
+    });
   } catch(err) {
     res.status(500).json(err)
   };
