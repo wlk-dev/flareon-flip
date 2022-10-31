@@ -10,19 +10,35 @@
                 <p class="mb-2 pb-1" style="color: #2b2a2a;">{{profileData.email}}</p>
                 <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
                   style="background-color: #efefef;">
-                  <div>
+                  <div class="px-3">
                     <p class="small text-muted mb-1">Games Played</p>
-                    <p class="mb-0">{{profileData.gamesPlayed}}</p>
+                    <p class="mb-0">{{profileGames}}</p>
                   </div>
                   <div class="px-3">
                     <p class="small text-muted mb-1">High Score</p>
-                    <p class="mb-0"></p>
+                    <p class="mb-0">{{profileHigh}}</p>
                   </div>
                 </div>
-                <div class="d-flex pt-1">
-                  <a href="/"><button type="button" class="btn btn-outline-primary me-1 flex-grow-1" style="border-radius:4px; margin-top: 10px; background-color: black; color: orange;">Menu</button></a>
-                  <a href="#"><button type="button" id="delete" class="btn btn-outline-primary me-1 flex-grow-1" style="border-radius:4px; margin-top: 10px; background-color: black; color: orange;">Delete Account</button></a>
+                  <div class="container">
+                    <div class="leaderboard">
+                      <div class="head">
+                        <i class="fas fa-crown"></i>
+                        <h3>Recent Scores</h3>
+                      </div>
+                      <div class="body">
+                        <ol>
+                          {{#each scoresArray as |score|}}
+                          {{> profileScores currentScore=score}}
+                          {{/each}}
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="pt-1">
+                <a href="/"><button type="button" class="btn me-1 flex-grow-1" style="border-radius:4px; margin-top: 10px; background-color: black; color: orange; margin: 2px">Menu</button></a>
+                <a href="#"><button type="button" id="delete" class="btn me-1 flex-grow-1" style="border-radius:4px; margin-top: 10px; background-color: black; color: orange; margin: 2px">Delete Account</button></a>
               </div>
             </div>
           </div>
