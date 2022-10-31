@@ -167,10 +167,12 @@ class GameState {
         const {isBomb, coinValue, targetTile} = eventObj.detail.tileObj;
         const {demote, toLevel} =  this._checkForDemotion( isBomb );
         
-        console.log(this.board.getRowData( targetTile[0] ), demote, toLevel)
+        console.log(this.board.getRowData( targetTile[0] ), demote, toLevel, coinValue)
         
         coinValue > 1 ? this._flippedTile(true) : this._flippedTile(false); // if its a high multiple tile pass true else false
-        this.coins > 1 ? this.coins *= coinValue : this.coins += coinValue;
+        coinValue > 1 && this.coins > 0 ? this.coins *= coinValue : this.coins += coinValue;
+        
+
 
         if(demote) {
             this._newBoardLoss(toLevel);
@@ -195,6 +197,8 @@ class GameInterface {
         this.state = state
         this.state.listen();
         this.loadBoard();
+
+        // TODO: add event listeners to the groups
     }
 
     loadBoard() {
@@ -221,25 +225,39 @@ class GameInterface {
     }
 
     updateBoard(board) {
-        for( let i = 0; i < 5; i++ ) {
-            this.state.board.getRowData(i, board) // map these over game element
-            this.state.board.getColumnData(i, board)
-        }
+        this.loadBoard()
 
-        console.log('here', board, this.state.coins)
+        for( let i = 1; i < 6; i++ ) {
+            let row = board[i-1]
+            $(`.group-${i}`).children().map( (index, tileElem) => {
+                tileElem.dataset.tid = `${i-1}-${index}`
+                tileElem.dataset.flipped = row[index] > 0 ? true : false
+            })
+        }
 
         $("#level").text(this.state.level)
         $("#total-coins").text(this.state.totalCoins)
         $("#coins-current").text(this.state.coins)
+    }
 
-        // It honestly doesn't matter the order of the ID's
-        // Just let the interface handle the parsing between them, it will honestly work out
-        // Because the client doesn't need to be aware of the actual order of the board as long as it follows the same sort of structure
+    signalMove(event) {
+        let [row, col] = event.target.dataset.tid.split("-")
+        let flipped = event.target.dataset.flipped === "true" ? true : false
+
+        if(!flipped) {
+            this.state.board.turnTile(row, col)
+        }
 
     }
 
     listen() { // add event listener to image group that listens for clicks, check id for `tile` string
+        this.updateBoard(this.state.board.tilesState)
+
         addEventListener("updateState", event => this.updateBoard( event.detail.boardState ))
+
+        for(let i = 1; i < 6; i++) {
+            $(`.group-${i}`).bind('click', event => this.signalMove(event) )
+        }
     }
 }
 
