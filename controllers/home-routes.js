@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, HiScore } = require("../models")
+const { User, HiScore, Score } = require("../models")
 const withAuth = require('../utils/auth');
 
 router.get("/", withAuth, async (req, res) => {
@@ -59,7 +59,15 @@ router.get('/how-to-play', withAuth, (req, res) => {
 
 router.get('/profile', withAuth, async (req, res) => {
   try {
-    const profileData = await User.findByPk(req.session.user_id)
+    const profileData = await User.findByPk(req.session.user_id, {
+      include: [
+        {
+        model: Score,
+        attributes: ["score"],
+        }
+      ]
+    })
+    console.log(profileData.Scores);
     res.render('profile', { profilePage : true, profileData : profileData.get({plain : true}) });
   } catch(err) {
     res.status(500).json(err)
