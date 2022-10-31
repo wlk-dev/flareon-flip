@@ -23,6 +23,8 @@ body {
 .border {
   border: rgb(245, 230, 220) solid 4.3px;
   border-radius: 7px;
+  max-width: 100px;
+  max-height: 100px;
 }
 .locator {
   position: sticky;
