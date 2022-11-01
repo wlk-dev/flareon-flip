@@ -198,7 +198,26 @@ class GameInterface {
         this.state.listen();
         this.loadBoard();
 
-        // TODO: add event listeners to the groups
+    }
+
+    setTileImg(elem, tileType) {
+        switch(tileType) {
+            case -1:
+                elem.src = "https://i.ibb.co/whzwYPV/My-project.png"
+                break;
+            case 0:
+                elem.src = "https://i.ibb.co/82pFH7N/flareon-1.png"
+                break;
+            case 1:
+                elem.src = "https://i.ibb.co/B4G3T7Y/1667254397926-1.png"
+                break;
+            case 2:
+                elem.src = "https://i.ibb.co/tqG4R7J/1667254471372-1.png"
+                break;
+            case 3:
+                elem.src = "https://i.ibb.co/MkrMFwc/1667254498700-1.png"
+                break;
+        }
     }
 
     loadBoard() {
@@ -224,14 +243,22 @@ class GameInterface {
 
     }
 
-    updateBoard(board) {
+    updateBoard(board) { // TODO: Set IMG's here
         this.loadBoard()
 
         for( let i = 1; i < 6; i++ ) {
             let row = board[i-1]
             $(`.group-${i}`).children().map( (index, tileElem) => {
-                tileElem.dataset.tid = `${i-1}-${index}`
-                tileElem.dataset.flipped = row[index] > 0 ? true : false
+                if(index !== 5) {
+                    tileElem.dataset.tid = `${i-1}-${index}`
+                    tileElem.dataset.flipped = row[index] > 0 ? true : false
+    
+                    if( row[index] > 0 ? true : false) {
+                        this.setTileImg(tileElem, this.state.board._getTileData( i-1, index ).coinValue)
+                    } else {
+                        this.setTileImg(tileElem, -1)
+                    }
+                }
             })
         }
 
