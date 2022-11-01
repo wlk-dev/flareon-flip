@@ -41,7 +41,17 @@ router.get('/leaderboard', withAuth, async (req, res) => {
         ['score', 'DESC'],
       ]
     });
-    const scores = leaderData.map((score) => score.get({plain: true}))
+
+    const allScores = leaderData.map((score) => score.get({plain: true}))
+
+    const scores = []; const sortedNames = [];
+    for(const score of allScores) {
+      if(!sortedNames.includes(score.name)) {
+        scores.push( allScores.find( p => p.name === score.name ) )
+        sortedNames.push(score.name)
+      }
+    }
+
     res.render('leaderboard', { 
       scores,
       leaderboardPage : true
