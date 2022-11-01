@@ -140,7 +140,7 @@ class GameState {
 
         if(hard) {
             this.totalCoins = 0
-            this.level = 0;
+            this.level = 1;
         };
 
         // console.trace('reset')
