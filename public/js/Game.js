@@ -326,10 +326,10 @@ class GameInterface {
         const {score, level, totalCoins} = detail 
         setTimeout( () => {
             Swal.fire({
-                title: `Submit score? ${formatSmall.format(score)}`,
+                title: `Submit score?`,
                 text: "The game will be reset after you submit!",
                 icon: 'warning',
-                footer : `<h4>${level} x ${totalCoins} = ${formatBig.format(score)}</h4>`,
+                footer : `<h2>${level} x ${totalCoins} = ${formatBig.format(score)}</h2>`,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -345,7 +345,19 @@ class GameInterface {
                 `
               }).then( resp => {
                 if(resp.isConfirmed) {
-                    //TODO: post score
+                    fetch("/apis/scores/submit", {
+                        method : "POST",
+                        headers : {"Content-Type" : "application/json"}
+                    }).then( resp => {
+                        Swal.fire({
+                            title: 'Score submitted!',
+                            footer : "You can view scores on your profile.",
+                            icon : "success",
+                            timer: 3000,
+                            timerProgressBar: true,
+                        })
+                    }).catch( err => console.log(err) )
+
                     const event = new CustomEvent('resetGame');
                     dispatchEvent(event);
                 }
