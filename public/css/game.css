@@ -11,6 +11,7 @@ body {
   width: 50%;
   position: sticky;
 }
+
 .group-1,
 .group-2,
 .group-3,
@@ -19,14 +20,19 @@ body {
   position: sticky;
   margin-bottom: 5px;
 }
+
 .fun-fact {
   font-size: 16px;
-  transform: translate(500px, 240px);
+  transform: translate(510px, 230px);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  width: 300px;
-  
+  max-width: 288px;
+  max-height: 120px;
+  min-height: 120px;
+  background-color: #f4f4f4;
+  padding: 6px;
 
 }
+
 .quote-button {
   transform: translate(340px, 30px);
 }
@@ -37,11 +43,13 @@ body {
   max-width: 100px;
   max-height: 100px;
 }
+
 .locator {
   position: sticky;
   width: 107px;
   height: 107px;
 }
+
 /* Level Text block */
 .level {
   position: sticky;
@@ -57,6 +65,7 @@ body {
   padding: 2px;
   margin-left: 380px;
 }
+
 /* Level Text */
 /* Total Coin Amount */
 .total {
@@ -72,6 +81,7 @@ body {
   border-radius: 8px;
   padding: 2px;
 }
+
 /* Total Coin amount text */
 
 /* Coins during round */
@@ -89,6 +99,7 @@ body {
   padding: 2px;
   margin-bottom: 20px;
 }
+
 /* Coins text */
 
 /* Vertical Locator Numbers */
@@ -96,55 +107,71 @@ body {
 #first-no {
   transform: translate(615px, -715px);
 }
+
 #third-no {
   transform: translate(615px, -738px);
 }
+
 #fifth-no {
   transform: translate(615px, -760px);
 }
+
 #seventh-no {
   transform: translate(615px, -780px);
 }
+
 #ninth-no {
   transform: translate(615px, -800px);
 }
+
 /* Number of Flareons in Row */
 #second-no {
   transform: translate(635px, -735px);
 }
+
 #fourth-no {
   transform: translate(635px, -755px);
 }
+
 #sixth-no {
   transform: translate(635px, -775px);
 }
+
 #eighth-no {
   transform: translate(635px, -795px);
 }
+
 #tenth-no {
   transform: translate(635px, -820px);
 }
+
 /* Horizontal Locator Numbers */
 /* Coins (Vertical) */
 #one-horz-no {
   transform: translate(50px, -825px);
 }
+
 #three-horz-no {
   transform: translate(160px, -963px);
 }
+
 #five-horz-no {
   transform: translate(270px, -1100px);
 }
+
 #seven-horz-no {
   transform: translate(380px, -1240px);
 }
+
 #nine-horz-no {
   transform: translate(500px, -1378px);
 }
+
 /* Flareons in each Column */
 #two-horz-no {
   transform: translate(70px, -840px);
 }
+
 #four-horz-no {
   transform: translate(180px, -980px);
 }
@@ -160,6 +187,7 @@ body {
 #ten-horz-no {
   transform: translate(510px, -1395px);
 }
+
 /* Number styling */
 .numbers {
   position: sticky;
@@ -167,6 +195,7 @@ body {
   font-size: 17px;
   color: rgb(96, 31, 31);
 }
+
 /* Navbar */
 ul {
   list-style-type: none;
@@ -181,46 +210,46 @@ ul {
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
   font-family: 'Nunito Sans', sans-serif;
 }
 
 .logo {
-	margin: 0;
-	font-size: 1.45em;
+  margin: 0;
+  font-size: 1.45em;
 }
 
 .main-nav {
-	margin-top: 5px;
+  margin-top: 5px;
 
 }
 
 .logo a,
 .main-nav a {
-	padding: 10px 15px;
-	text-align: center;
-	text-transform: uppercase;
-	display: block;
+  padding: 10px 15px;
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
   color: #871515;
   font-family: 'Nunito Sans', sans-serif;
 }
 
 .main-nav a {
-	color: #871515;
-	font-size: .99em;
+  color: #871515;
+  font-size: .99em;
   font-weight: 600;
 }
 
 .main-nav a:hover {
-	color: #c87676;
+  color: #c87676;
 }
 
 .header {
-	border: 2px solid #832a2a;
-	background: linear-gradient(to right, rgb(255, 153, 0), #ff682cd7);
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+  border: 2px solid #832a2a;
+  background: linear-gradient(to right, rgb(255, 153, 0), #ff682cd7);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
   margin-bottom: 50px;
 }
 
@@ -237,16 +266,17 @@ a {
 } */
 
 .static:hover {
-  opacity:0;
+  opacity: 0;
 }
+
 .static {
-  position:absolute;
-  background:#c04a4a
+  position: absolute;
+  background: #c04a4a
 }
-.flareon-fact 
-{
-  
-transform: translate(500px, -25px); 
+
+.flareon-fact {
+
+  transform: translate(500px, -25px);
 }
 
 .image-group{
@@ -254,24 +284,27 @@ transform: translate(500px, -25px);
 }
 
 #fact {
+  background-color: #f4f4f4;
+  padding: 35px;
   width: 175px;
   height: 35px;
   position: absolute;
   font-size: 17px;
-  transform: translate(535px,75px);   
+  transform: translate(535px, 75px);
 }
 
-
 @media (min-width: 769px) {
-	.header,
-	.main-nav {
-		display: flex;
-	}
-	
 
-@media (min-width: 1025px) {
-	.header {
-		flex-direction: row;
-		justify-content: space-between;
-	}
-}}
+  .header,
+  .main-nav {
+    display: flex;
+  }
+
+
+  @media (min-width: 1025px) {
+    .header {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
