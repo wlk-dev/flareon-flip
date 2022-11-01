@@ -16,6 +16,24 @@ const userdata = [
     email: 'amiko2k20@aol.com',
     password: 'password12345',
   },
+
+  {
+    name: 'Max',
+    email: 'Maxium@yahoo.com',
+    password: 'password12345',
+  },
+
+  {
+    name: 'Davis',
+    email: 'Hi_imDave@gmail.com',
+    password: 'password12345',
+  },
+
+  {
+    name: 'April',
+    email: 'SeasonApril@msn.com',
+    password: 'password12345',
+  },
 ];
 
 async function seedUser (){
