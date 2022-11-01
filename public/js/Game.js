@@ -112,7 +112,9 @@ class GameState {
 
         this.tilesFlipped = 0;
         this.highTilesFlipped = 0;
-        // TODO: Add level up conditions
+
+        this.lastTilesState = this.board.tilesState;
+        this.lastTiles = this.board.tiles;
     }
 
     _flippedTile(high) {
@@ -123,6 +125,9 @@ class GameState {
     }
 
     _resetGameData() {
+        this.lastTilesState = this.board.tilesState;
+        this.lastTiles = this.board.tiles;
+
         this.board = this._genBoard();
         this.highMults = this.board.getHighMults();
 
@@ -130,8 +135,9 @@ class GameState {
         this.highTilesFlipped = 0;
         this.coins = 0;
 
-        console.trace('reset')
-        console.table(this.board.tiles);
+
+        // console.trace('reset')
+        // console.table(this.board.tiles);
     }
 
     _genBoard() {
@@ -172,16 +178,22 @@ class GameState {
         coinValue > 1 ? this._flippedTile(true) : this._flippedTile(false); // if its a high multiple tile pass true else false
         coinValue > 1 && this.coins > 0 ? this.coins *= coinValue : this.coins += coinValue;
         
-
-
+        let reset = false;
         if(demote) {
             this._newBoardLoss(toLevel);
+            reset = true;
         } else if (this._checkForWin()) {
             this._newBoardWin( this.level += 1 )
+            reset = true
         }
-        
-        const event = new CustomEvent('updateState', { detail : { boardState : this.board.tilesState } });
+
+        const event = new CustomEvent('updateState', { detail : {reset} });
         dispatchEvent(event);
+    }
+
+    getBoardData() {
+        const data = { current : { tiles : this.board.tiles, tilesState : this.board.tilesState }, prev : { tiles : this.lastTiles, tilesState : this.lastTilesState } }
+        return data
     }
 
     listen() {
@@ -243,25 +255,39 @@ class GameInterface {
 
     }
 
-    updateBoard(board) { // TODO: Set IMG's here
-        this.loadBoard()
-
+    renderBoard(board) {
+        const  {tiles, tilesState} = board
         for( let i = 1; i < 6; i++ ) {
-            let row = board[i-1]
+            let row = tilesState[i-1]
             $(`.group-${i}`).children().map( (index, tileElem) => {
                 if(index !== 5) {
                     tileElem.dataset.tid = `${i-1}-${index}`
                     tileElem.dataset.flipped = row[index] > 0 ? true : false
-    
+                    
                     if( row[index] > 0 ? true : false) {
-                        this.setTileImg(tileElem, this.state.board._getTileData( i-1, index ).coinValue)
+                        this.setTileImg(tileElem, tiles[i-1][index])
                     } else {
                         this.setTileImg(tileElem, -1)
                     }
                 }
             })
         }
+    }
 
+    updateBoard(detail) { // TODO: Set IMG's here
+        this.loadBoard()
+
+        const boardData = this.state.getBoardData()
+        const prev = boardData.prev
+        const current = boardData.current
+
+        if(detail.reset) {
+            this.renderBoard(prev)
+            setTimeout(() => this.renderBoard(current), 1000);
+        } else {
+            this.renderBoard(current)
+        }
+        
         $("#level").text(this.state.level)
         $("#total-coins").text(this.state.totalCoins)
         $("#coins-current").text(this.state.coins)
@@ -278,9 +304,9 @@ class GameInterface {
     }
 
     listen() { // add event listener to image group that listens for clicks, check id for `tile` string
-        this.updateBoard(this.state.board.tilesState)
+        this.updateBoard( {reset : false} )
 
-        addEventListener("updateState", event => this.updateBoard( event.detail.boardState ))
+        addEventListener("updateState", event => this.updateBoard( event.detail ))
 
         for(let i = 1; i < 6; i++) {
             $(`.group-${i}`).bind('click', event => this.signalMove(event) )
