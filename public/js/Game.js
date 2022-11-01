@@ -140,7 +140,7 @@ class GameState {
 
         if(hard) {
             this.totalCoins = 0
-            this.level = 0;
+            this.level = 1;
         };
 
         // console.trace('reset')
@@ -186,12 +186,12 @@ class GameState {
         coinValue > 1 ? this._flippedTile(true) : this._flippedTile(false); // if its a high multiple tile pass true else false
         coinValue > 1 && this.coins > 0 ? this.coins *= coinValue : this.coins += coinValue;
         
-        let reset = false;
+        let reset = true;
         if(demote) {
             this._newBoardLoss(toLevel);
-            reset = true;
         } else if (this._checkForWin()) {
             this._newBoardWin( this.level += 1 )
+        } else {
             reset = false
         }
 

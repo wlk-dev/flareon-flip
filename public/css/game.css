@@ -28,7 +28,7 @@ background-color: #f4f4f4;
 padding: 6px;
 
 }
-button {
+.quote-button {
   transform: translate(340px, 30px);
 }
 
