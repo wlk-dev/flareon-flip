@@ -214,7 +214,6 @@ a {
   font-family: 'Nunito Sans', sans-serif;
 }
 
-
 .logo {
   margin: 0;
   font-size: 1.45em;
@@ -244,7 +243,6 @@ a {
 .main-nav a:hover {
   color: #c87676;
 }
-
 
 .header {
   border: 2px solid #832a2a;
@@ -281,6 +279,9 @@ a {
   transform: translate(500px, -25px);
 }
 
+.image-group{
+  height: 25px;
+}
 
 #fact {
   background-color: #f4f4f4;
