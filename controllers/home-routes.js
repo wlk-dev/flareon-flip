@@ -40,15 +40,11 @@ router.get('/leaderboard', withAuth, async (req, res) => {
       order: [
         ['score', 'DESC'],
       ]
-      
     });
-    
-    const scores = leaderData.map((score) => score.get({plain: true})) 
-    console.log(scores)
+    const scores = leaderData.map((score) => score.get({plain: true}))
     res.render('leaderboard', { 
       scores,
       leaderboardPage : true
-      
   });
     } catch (err) {
     res.status(500).json(err);
@@ -57,7 +53,7 @@ router.get('/leaderboard', withAuth, async (req, res) => {
 })
 
 router.get('/how-to-play', withAuth, (req, res) => {
-  res.render('how-to-play', { userPage : true })
+  res.render('how-to-play', { h2pPage : true })
 });
 
 router.get('/profile', withAuth, async (req, res) => {

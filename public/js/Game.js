@@ -167,10 +167,12 @@ class GameState {
         const {isBomb, coinValue, targetTile} = eventObj.detail.tileObj;
         const {demote, toLevel} =  this._checkForDemotion( isBomb );
         
-        console.log(this.board.getRowData( targetTile[0] ), demote, toLevel)
+        console.log(this.board.getRowData( targetTile[0] ), demote, toLevel, coinValue)
         
         coinValue > 1 ? this._flippedTile(true) : this._flippedTile(false); // if its a high multiple tile pass true else false
-        this.coins > 1 ? this.coins *= coinValue : this.coins += coinValue;
+        coinValue > 1 && this.coins > 0 ? this.coins *= coinValue : this.coins += coinValue;
+        
+
 
         if(demote) {
             this._newBoardLoss(toLevel);
@@ -178,6 +180,8 @@ class GameState {
             this._newBoardWin( this.level += 1 )
         }
         
+        const event = new CustomEvent('updateState', { detail : { boardState : this.board.tilesState } });
+        dispatchEvent(event);
     }
 
     listen() {
@@ -187,6 +191,105 @@ class GameState {
 
 }
 
-const game = new GameState();
-game.listen()
-console.table(game.board.tiles)
+
+class GameInterface {
+    constructor(state) {
+        this.state = state
+        this.state.listen();
+        this.loadBoard();
+
+    }
+
+    setTileImg(elem, tileType) {
+        switch(tileType) {
+            case -1:
+                elem.src = "https://i.ibb.co/whzwYPV/My-project.png"
+                break;
+            case 0:
+                elem.src = "https://i.ibb.co/82pFH7N/flareon-1.png"
+                break;
+            case 1:
+                elem.src = "https://i.ibb.co/B4G3T7Y/1667254397926-1.png"
+                break;
+            case 2:
+                elem.src = "https://i.ibb.co/tqG4R7J/1667254471372-1.png"
+                break;
+            case 3:
+                elem.src = "https://i.ibb.co/MkrMFwc/1667254498700-1.png"
+                break;
+        }
+    }
+
+    loadBoard() {
+        let rows = []; let cols = [];
+        for( let i = 0; i < 5; i++ ) {
+            rows.push( { row : i, data : this.state.board.getRowInfo(i)} )
+            cols.push( { col : i, data : this.state.board.getColumnInfo(i)} ) // prolly also map these
+        }
+
+        rows.map( data => {
+            let [coins, bombs] = [...$(`.row_0-${data.row+1}`).children()]
+
+            $(coins).text(data.data.coinTotal)
+            $(bombs).text(data.data.bombTotal)
+        });
+
+        cols.map( data => {
+            let [coins, bombs] = [...$(`.row_${data.col+1}-0`).children()]
+
+            $(coins).text(data.data.coinTotal)
+            $(bombs).text(data.data.bombTotal)
+        });
+
+    }
+
+    updateBoard(board) { // TODO: Set IMG's here
+        this.loadBoard()
+
+        for( let i = 1; i < 6; i++ ) {
+            let row = board[i-1]
+            $(`.group-${i}`).children().map( (index, tileElem) => {
+                if(index !== 5) {
+                    tileElem.dataset.tid = `${i-1}-${index}`
+                    tileElem.dataset.flipped = row[index] > 0 ? true : false
+    
+                    if( row[index] > 0 ? true : false) {
+                        this.setTileImg(tileElem, this.state.board._getTileData( i-1, index ).coinValue)
+                    } else {
+                        this.setTileImg(tileElem, -1)
+                    }
+                }
+            })
+        }
+
+        $("#level").text(this.state.level)
+        $("#total-coins").text(this.state.totalCoins)
+        $("#coins-current").text(this.state.coins)
+    }
+
+    signalMove(event) {
+        let [row, col] = event.target.dataset.tid.split("-")
+        let flipped = event.target.dataset.flipped === "true" ? true : false
+
+        if(!flipped) {
+            this.state.board.turnTile(row, col)
+        }
+
+    }
+
+    listen() { // add event listener to image group that listens for clicks, check id for `tile` string
+        this.updateBoard(this.state.board.tilesState)
+
+        addEventListener("updateState", event => this.updateBoard( event.detail.boardState ))
+
+        for(let i = 1; i < 6; i++) {
+            $(`.group-${i}`).bind('click', event => this.signalMove(event) )
+        }
+    }
+}
+
+const state = new GameState();
+const game = new GameInterface(state);
+game.listen();
+// game.listen()
+// console.table(game.board.tiles)
