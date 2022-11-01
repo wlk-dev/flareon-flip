@@ -1,3 +1,6 @@
+const formatSmall = Intl.NumberFormat("en", {notation : "compact"})
+const formatBig = Intl.NumberFormat('en', {style: 'decimal', maximumFractionDigits: 0});
+
 class Board {
     constructor() {
         this.tiles =  Array.from(Array(5), x => this._genRow()); // creates 5x5 table
@@ -112,7 +115,9 @@ class GameState {
 
         this.tilesFlipped = 0;
         this.highTilesFlipped = 0;
-        // TODO: Add level up conditions
+
+        this.lastTilesState = this.board.tilesState;
+        this.lastTiles = this.board.tiles;
     }
 
     _flippedTile(high) {
@@ -122,7 +127,10 @@ class GameState {
         };
     }
 
-    _resetGameData() {
+    _resetGameData(hard=false) {
+        this.lastTilesState = this.board.tilesState;
+        this.lastTiles = this.board.tiles;
+
         this.board = this._genBoard();
         this.highMults = this.board.getHighMults();
 
@@ -130,8 +138,13 @@ class GameState {
         this.highTilesFlipped = 0;
         this.coins = 0;
 
-        console.trace('reset')
-        console.table(this.board.tiles);
+        if(hard) {
+            this.totalCoins = 0
+            this.level = 1;
+        };
+
+        // console.trace('reset')
+        // console.table(this.board.tiles);
     }
 
     _genBoard() {
@@ -143,6 +156,9 @@ class GameState {
         this.level = level;
 
         this._resetGameData();
+
+        const event = new CustomEvent('levelUp', { detail : { score : this.level * this.totalCoins, level : this.level, totalCoins : this.totalCoins } });
+        dispatchEvent(event);
     }
 
     _newBoardLoss(level) {
@@ -167,26 +183,36 @@ class GameState {
         const {isBomb, coinValue, targetTile} = eventObj.detail.tileObj;
         const {demote, toLevel} =  this._checkForDemotion( isBomb );
         
-        console.log(this.board.getRowData( targetTile[0] ), demote, toLevel, coinValue)
-        
         coinValue > 1 ? this._flippedTile(true) : this._flippedTile(false); // if its a high multiple tile pass true else false
         coinValue > 1 && this.coins > 0 ? this.coins *= coinValue : this.coins += coinValue;
         
-
-
+        let reset = true;
         if(demote) {
             this._newBoardLoss(toLevel);
         } else if (this._checkForWin()) {
             this._newBoardWin( this.level += 1 )
+        } else {
+            reset = false
         }
-        
-        const event = new CustomEvent('updateState', { detail : { boardState : this.board.tilesState } });
+
+        const event = new CustomEvent('updateState', { detail : {reset} });
         dispatchEvent(event);
+    }
+
+    getBoardData() {
+        const data = { current : { tiles : this.board.tiles, tilesState : this.board.tilesState }, prev : { tiles : this.lastTiles, tilesState : this.lastTilesState } }
+        return data
     }
 
     listen() {
         addEventListener("turnedTile", event => this._parseTile(event));
         addEventListener("cantFlip", event => console.log(event))
+        addEventListener("resetGame", event => {
+            this._resetGameData(true)
+
+            const newEvent = new CustomEvent('updateState', { detail : {reset : false} });
+            dispatchEvent(newEvent);
+        })
     }
 
 }
@@ -243,44 +269,96 @@ class GameInterface {
 
     }
 
-    updateBoard(board) { // TODO: Set IMG's here
-        this.loadBoard()
-
+    renderBoard(board) {
+        const  {tiles, tilesState} = board
         for( let i = 1; i < 6; i++ ) {
-            let row = board[i-1]
+            let row = tilesState[i-1]
             $(`.group-${i}`).children().map( (index, tileElem) => {
                 if(index !== 5) {
                     tileElem.dataset.tid = `${i-1}-${index}`
                     tileElem.dataset.flipped = row[index] > 0 ? true : false
-    
+                    
                     if( row[index] > 0 ? true : false) {
-                        this.setTileImg(tileElem, this.state.board._getTileData( i-1, index ).coinValue)
+                        this.setTileImg(tileElem, tiles[i-1][index])
                     } else {
                         this.setTileImg(tileElem, -1)
                     }
                 }
             })
         }
+    }
 
+    updateBoard(detail) { // TODO: Set IMG's here
+        this.loadBoard()
+
+        const boardData = this.state.getBoardData()
+        const prev = boardData.prev
+        const current = boardData.current
+
+        if(detail.reset) {
+            this.renderBoard(prev)
+            setTimeout(() => this.renderBoard(current), 1000);
+        } else {
+            this.renderBoard(current)
+        }
+        
         $("#level").text(this.state.level)
         $("#total-coins").text(this.state.totalCoins)
         $("#coins-current").text(this.state.coins)
     }
 
     signalMove(event) {
-        let [row, col] = event.target.dataset.tid.split("-")
-        let flipped = event.target.dataset.flipped === "true" ? true : false
-
-        if(!flipped) {
-            this.state.board.turnTile(row, col)
+        try {
+            let [row, col] = event.target.dataset.tid.split("-")
+            let flipped = event.target.dataset.flipped === "true" ? true : false
+    
+            if(!flipped) {
+                this.state.board.turnTile(row, col)
+            }
+        } catch (err) {
+            console.log("Invalid tile target clicked. Here is a traceback incase it was something else : ")
+            console.trace(err)
         }
 
     }
 
-    listen() { // add event listener to image group that listens for clicks, check id for `tile` string
-        this.updateBoard(this.state.board.tilesState)
+    promptSaveScore(detail) {
+        const {score, level, totalCoins} = detail 
+        setTimeout( () => {
+            Swal.fire({
+                title: `Submit score? ${formatSmall.format(score)}`,
+                text: "The game will be reset after you submit!",
+                icon: 'warning',
+                footer : `<h4>${level} x ${totalCoins} = ${formatBig.format(score)}</h4>`,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Submit!',
+                cancelButtonText: 'Continue playing...',
+                width: 600,
+                padding: '3em',
+                backdrop: `
+                  rgba(0,0,123,0.4)
+                  url("https://64.media.tumblr.com/31d7a5de377cc337fcde5bf77b74e77e/937550501c3990be-7d/s1280x1920/e3f0c2f71a2ae2e2113e1d7bc2ba07d8134054ba.gifv")
+                  left top
+                  no-repeat
+                `
+              }).then( resp => {
+                if(resp.isConfirmed) {
+                    //TODO: post score
+                    const event = new CustomEvent('resetGame');
+                    dispatchEvent(event);
+                }
+              }).catch( err => console.error(err) )
+        }, 1000)
 
-        addEventListener("updateState", event => this.updateBoard( event.detail.boardState ))
+    }
+
+    listen() { // add event listener to image group that listens for clicks, check id for `tile` string
+        this.updateBoard( {reset : false} )
+
+        addEventListener("updateState", event => this.updateBoard( event.detail ))
+        addEventListener("levelUp", event => this.promptSaveScore( event.detail ))
 
         for(let i = 1; i < 6; i++) {
             $(`.group-${i}`).bind('click', event => this.signalMove(event) )

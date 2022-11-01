@@ -9,7 +9,6 @@ var quotes = [
     '\"The pokemon Flareon has the highest attack stat out of\
     all of the other Eevee evolutions, which is impressive.\"\n',
 ]
-Math.floor(Math.random() * (max - min + 1)) + min;
 var randomNumber = Math.floor(Math.random()*quotes.length);
 document.getElementById('quotes').innerHTML = quotes[randomNumber];
 function newQuote(){
