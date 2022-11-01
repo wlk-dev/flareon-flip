@@ -1,4 +1,19 @@
-.background-color {
-  background-color: #000000d7;
-  height: 100vh;
+.gradient-custom-2 {
+  background: #646464;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, rgb(43, 42, 42), #646464);
+  
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, rgb(43, 42, 42), #646464)
+}
+
+.gradient-background {
+  background: #ff4f4f;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to left ,rgb(255, 153, 0), #ff682cd7);
+  
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to left, rgb(255, 153, 0), #ff682cd7)
 }
