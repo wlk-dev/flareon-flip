@@ -253,6 +253,10 @@ transform: translate(500px, -25px);
 }
 
 
+.image-group{
+  height: 25px;
+}
+
 #fact {
   background-color: #f4f4f4; 
   padding: 35px;
