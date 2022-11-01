@@ -21,11 +21,10 @@ body {
 }
 .fun-fact {
   font-size: 16px;
-  transform: translate(510px, 188px);
+  transform: translate(500px, 240px);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-width: 300px;
-background-color: #f4f4f4;
-padding: 6px;
+  width: 300px;
+  
 
 }
 .quote-button {
@@ -186,7 +185,6 @@ a {
   font-family: 'Nunito Sans', sans-serif;
 }
 
-
 .logo {
 	margin: 0;
 	font-size: 1.45em;
@@ -216,7 +214,6 @@ a {
 .main-nav a:hover {
 	color: #c87676;
 }
-
 
 .header {
 	border: 2px solid #832a2a;
@@ -252,20 +249,19 @@ a {
 transform: translate(500px, -25px); 
 }
 
-
 .image-group{
   height: 25px;
 }
 
 #fact {
-  background-color: #f4f4f4; 
-  padding: 35px;
   width: 175px;
   height: 35px;
   position: absolute;
   font-size: 17px;
   transform: translate(535px,75px);   
 }
+
+
 @media (min-width: 769px) {
 	.header,
 	.main-nav {
