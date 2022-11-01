@@ -345,17 +345,28 @@ class GameInterface {
                 `
               }).then( resp => {
                 if(resp.isConfirmed) {
-                    fetch("/apis/scores/submit", {
+                    fetch("/api/scores/submit", {
                         method : "POST",
+                        body : JSON.stringify({score}),
                         headers : {"Content-Type" : "application/json"}
-                    }).then( resp => {
-                        Swal.fire({
-                            title: 'Score submitted!',
-                            footer : "You can view scores on your profile.",
-                            icon : "success",
-                            timer: 3000,
-                            timerProgressBar: true,
-                        })
+                    }).then( posted => {
+                        if (posted.ok) {
+                            Swal.fire({
+                                title: 'Score submitted!',
+                                footer : "You can view scores on your profile.",
+                                icon : "success",
+                                timer: 3000,
+                                timerProgressBar: true,
+                            })
+                        } else {
+                            Swal.fire({
+                                title: 'Failed to submit score...',
+                                footer : `Got back ${posted.status}`,
+                                icon : "success",
+                                timer: 3000,
+                                timerProgressBar: true,
+                            })
+                        }
                     }).catch( err => console.log(err) )
 
                     const event = new CustomEvent('resetGame');
