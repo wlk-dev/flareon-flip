@@ -26,4 +26,25 @@ const deleteUser = async () => {
 
 };
 
+const submitHiScore = async () => {
+    const result = await fetch('/api/hi-score/submit', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    if(result.ok) {
+        await Swal.fire(
+            'Submitted!',
+            'Your hi-score has been deleted.',
+            'success'
+        )
+    } else {
+        await Swal.fire(
+            'Failed to submit your score...',
+            'error'
+        ) 
+    }
+}
+
+$("#submit").on('click', submitHiScore)
 $('#delete').on('click', deleteUser);
