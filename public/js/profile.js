@@ -27,7 +27,7 @@ const deleteUser = async () => {
 };
 
 const submitHiScore = async () => {
-    const result = await fetch('/api/hi-score/submit', {
+    const result = await fetch('/api/hi-scores/submit', {
         method : 'POST',
         headers: { 'Content-Type': 'application/json' },
     });
@@ -35,7 +35,7 @@ const submitHiScore = async () => {
     if(result.ok) {
         await Swal.fire(
             'Submitted!',
-            'Your hi-score has been deleted.',
+            'Your hi-score has been submitted.',
             'success'
         )
     } else {

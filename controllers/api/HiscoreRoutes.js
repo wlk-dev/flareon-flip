@@ -1,14 +1,26 @@
 const router = require('express').Router();
-const { HiScore, User } = require('../../models');
+const { HiScore, User, Score } = require('../../models');
 
 router.post('/submit', async (req, res) => {
   try {
-    let name = await User.findByPk(user_id);
-    name = name.get({plain : true}).name
+    const user_id = req.session.user_id
 
-    const scoresInput = await HiScore.create({user_id, name, score});
+    let user = await User.findByPk(user_id, {
+      include : {
+        model : Score,
+        attributes : ['score']
+      }
+    });
+
+    let name = user.get({plain : true}).name
+    let hiScore = Math.max(...user.Scores.map( score => score.get({plain : true}).score))
+    
+    console.log(user_id, name, hiScore)
+
+    const scoresInput = await HiScore.create({user_id, name, score : hiScore});
     res.status(200).json(scoresInput)
   } catch (err) {
+    console.trace(err)
     res.status(400).json(err);
   }
 });
