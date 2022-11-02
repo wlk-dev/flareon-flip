@@ -169,7 +169,7 @@ class GameState {
 
     _checkForDemotion(flippedBomb) {
         if (flippedBomb) {
-            return { demote : true, toLevel : this.tilesFlipped < this.level ? 1 : ( this.level === 1 ? 1 : this.level-1 ) };
+            return { demote : true, toLevel : this.tilesFlipped < this.level ? 1 : ( this.level === 1 ? 1 : this.level ) };
         }
 
         return {demote : false, toLevel : this.level};
@@ -345,6 +345,7 @@ class GameInterface {
                 `
               }).then( resp => {
                 if(resp.isConfirmed) {
+<<<<<<< Updated upstream
                     fetch("/api/scores/submit", {
                         method : "POST",
                         body : JSON.stringify({score}),
@@ -367,6 +368,19 @@ class GameInterface {
                                 timerProgressBar: true,
                             })
                         }
+=======
+                    fetch("/apis/scores/submit", {
+                        method : "POST",
+                        headers : {"Content-Type" : "application/json"}
+                    }).then( resp => {
+                        Swal.fire({
+                            title: 'Score submitted!',
+                            footer : "You can view scores on your profile.",
+                            icon : "success",
+                            timer: 3000,
+                            timerProgressBar: true,
+                        })
+>>>>>>> Stashed changes
                     }).catch( err => console.log(err) )
 
                     const event = new CustomEvent('resetGame');
