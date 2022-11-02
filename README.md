@@ -10,6 +10,8 @@
 
   ## Usage
   The intended use of this project is to play a game and populate a profile/leaderboard with the scores of users and all time high scores.
+  
+  [Deployed Page](https://flareon-flip-production.up.railway.app/)
 
   ## Contributors
   Will Koelling, Julia Fritsch, Dong Nguyen, Trey Kockelman
